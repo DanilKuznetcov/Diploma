@@ -25,27 +25,49 @@ class CommentItem(BaseItem):
         '''Парсит коментарий. На вход принимает элемент с классам reply
         '''
 
-        post_id = comment.get_attribute('id')
+        self.comment_id = comment.get_attribute('data-post-id')
         # x = comment.get_attribute('onclick')
         # reply_post_id = 'post' + comment.get_attribute('onclick').split("'")[1]
-        time = comment.find_element(By.CLASS_NAME, 'rel_date').text
+        # time = comment.find_element(By.CLASS_NAME, 'rel_date').text
 
-        #Иногда коментарии могут быть удалеными, и тогда этих параметров не будет
+        text = comment.text
+        #Тригер есть не всегда
+        is_reply1 = comment.find_elements(By.CLASS_NAME, 'mem_link') != []
+        is_reply2 = comment.find_elements(By.CLASS_NAME, 'wall_reply_greeting') != []
+        is_reply_on_reply = comment.find_elements(By.CLASS_NAME, 'reply_to') != []
+
+        if is_reply_on_reply:
+            self.trigger_type = 'R'
+            self.trigger_id = comment.find_element(By.CLASS_NAME, 'reply_to').get_attribute('data-root-id')
+        elif is_reply1 or is_reply2:
+            self.trigger_type = 'C'
+            self.trigger_id = comment.find_element(By.XPATH, '..').get_attribute('id')[7:]
+            # self.trigger_id = comment.find_elements(By.CLASS_NAME, 'mem_link')[0].parent
+            # self.trigger_id = comment.find_elements(By.CLASS_NAME, 'wall_reply_greeting')[0].get_attribute('onclick').split(',')
+            # x = 7
+        else:
+            self.trigger_type = 'P'
+            self.trigger_id = comment.find_element(By.XPATH, '..').get_attribute('id')[7:]
+
+        # except:
+        #     pass
+            # self.replied_to_id = None
+
         try:
-            author = comment.find_element(By.CLASS_NAME, 'author').get_attribute('href')
+            self.author = comment.find_element(By.CLASS_NAME, 'author').get_attribute('href')
+            self.text = comment.find_element(By.CLASS_NAME, 'reply_text').text
+            self.like_count = comment.find_element(By.CLASS_NAME, 'like_cont').text
+            self.date = comment.find_element(By.CLASS_NAME, 'rel_date').text
         except:
-            author = None
-        try:
-            text = comment.find_element(By.CLASS_NAME, 'reply_text').text
-        except:
-            text = None
-        
-        self.post_id = post_id
-        # self.reply_post_id = reply_post_id
-        self.author = author
-        self.text = text
-        self.time = time
-    
+            self.author = None
+            self.text = None
+            self.like_count = None
+            self.date = None
+
+        if self.like_count == '':
+            self.like_count
+
+
+
     def __repr__(self) -> str:
-        # return f'<Comment: post_id={self.post_id}, reply_id={self.reply_post_id}, author={self.author}, text={self.text}, time={self.time}>'
-        return f'<Comment: post_id={self.post_id}, author={self.author}, text={self.text}, time={self.time}>'
+        return f'\n<Comment: comment_id={self.comment_id}, trigger_type={self.trigger_type}, trigger_id={self.trigger_id}, author={self.author}, like_count={self.like_count}, date={self.date}, text={self.text}>'

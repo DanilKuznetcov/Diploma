@@ -6,14 +6,17 @@ from SeleniumParser.base import BaseItem, CommentItem
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
+import os
 
 class CustomBrowserManager:
     '''Класс браузера'''
 
     def __init__(self, chrome=False, web_driver=None) -> None:
-        op = webdriver.ChromeOptions()
-        op.add_argument('--headless')
-        self.broswer = webdriver.Chrome('./SeleniumParser/chromedriver', options=op)
+        # print(os.getcwd())
+        # op = webdriver.ChromeOptions()
+        # op.add_argument('--headless')
+        # self.broswer = webdriver.Chrome('/home/danil/Documents/Doploma/EntireParser/SeleniumParser/chromedriver', options=op)
+        self.broswer = webdriver.Chrome('/home/danil/Documents/Doploma/EntireParser/SeleniumParser/chromedriver')
 
     def load_items(self, item_container, args_find: dict, count: int):
         '''Генератор для получаения элементов с загрузкой их по Ajax'''
@@ -28,7 +31,6 @@ class CustomBrowserManager:
 
             #Если номер элемента для отдачи больше, чем сейчас загружено, то загружаем еще элементы
             if N == downloaded_comments:
-
 
                 start = datetime.datetime.now()
                 while datetime.datetime.now() - start < datetime.timedelta(seconds=1) and len(item_container.find_elements(*args_find)) == downloaded_comments:
