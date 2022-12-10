@@ -26,6 +26,7 @@ class CommentItem(BaseItem):
         '''
 
         self.comment_id = comment.get_attribute('data-post-id')
+
         # x = comment.get_attribute('onclick')
         # reply_post_id = 'post' + comment.get_attribute('onclick').split("'")[1]
         # time = comment.find_element(By.CLASS_NAME, 'rel_date').text
@@ -38,7 +39,8 @@ class CommentItem(BaseItem):
 
         if is_reply_on_reply:
             self.trigger_type = 'R'
-            self.trigger_id = comment.find_element(By.CLASS_NAME, 'reply_to').get_attribute('data-root-id')
+            attr = comment.find_element(By.CLASS_NAME, 'reply_to').get_attribute('onclick').split(',')
+            self.trigger_id = attr[2][2:-1]
         elif is_reply1 or is_reply2:
             self.trigger_type = 'C'
             self.trigger_id = comment.find_element(By.XPATH, '..').get_attribute('id')[7:]
@@ -65,9 +67,13 @@ class CommentItem(BaseItem):
             self.date = None
 
         if self.like_count == '':
-            self.like_count
+            self.like_count = 0
+
+        self.post_id = args[0][19:]
+
 
 
 
     def __repr__(self) -> str:
-        return f'\n<Comment: comment_id={self.comment_id}, trigger_type={self.trigger_type}, trigger_id={self.trigger_id}, author={self.author}, like_count={self.like_count}, date={self.date}, text={self.text}>'
+        return f'<Comment: comment_id={self.comment_id}, trigger_type={self.trigger_type}, trigger_id={self.trigger_id}, author={self.author}, like_count={self.like_count}, date={self.date}, text={self.text}, post_id={self.post_id}>'
+

@@ -3,6 +3,8 @@ import SeleniumParser.GetCommentsSelenium
 import requests
 from constants import *
 import warnings
+import json
+
 
 class Test(TestCase):
     def setUp(self):
@@ -18,8 +20,10 @@ class Test(TestCase):
         self.comments = list(SeleniumParser.GetCommentsSelenium.get_comment(self.post))
 
     def test_get_comment(self):
-        result = SeleniumParser.GetCommentsSelenium.get_comment(self.post)
-        print(list(result))
+        result = self.comments
+        print(result)
+        z = json.dumps([com.__dict__ for com in result])
+        print(z)
 
     def test_correct_trigger(self):
         self.assertIsNotNone(self.comments[1])
