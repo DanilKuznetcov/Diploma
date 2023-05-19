@@ -7,12 +7,15 @@ This project allows extract topics from social network and understand their dayn
 
 ## Example
 Analyzing publication by key-word "крипта" ("crypto"), the following result was obtained:
+
 ![image](https://github.com/DanilKuznetcov/Diploma/assets/49263683/6c914b39-fa39-4ede-bf6e-d2c35a26bc7c)
 
 To analyze the dynamics, let's check how the interpretation for the 1st topic ("BTC") changes
+
 ![image](https://github.com/DanilKuznetcov/Diploma/assets/49263683/6a32ad9a-6f94-4ddd-8845-a216e8620c45)
 
 You can compare it with chart of BTC in 2022 and find next correct trends:
+
 ![image](https://github.com/DanilKuznetcov/Diploma/assets/49263683/210f2889-0882-4269-9e42-6326f2588cd4)
 1. The maximum popularity of the topic (the Frequency value is the maximum) corresponds to a sharp and maximum drop in May and June.
 2. In February, the topic was characterized by the words "waves" and "rise in price", which corresponds to unstable growth on the chart for this period.
