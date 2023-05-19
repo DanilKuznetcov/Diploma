@@ -22,7 +22,7 @@ You can compare it with chart of BTC in 2022 and find next correct trends:
 3. Analyst Mike McGlone and investor Tim Draper also appear in the interpretation of the topic for September and October, respectively. This is due to the fact that they gave a forecast for the growth of btc in these periods.
 
 ## Usage
-The whole system is divided into three parts for the convenience of modification for specific topics (keywords).
+The whole system is divided into three parts for the convenience of modification for specific topics (keywords). For work is needed only "Diplom_final_git" folder, others files are just examples of works.
 
 ### 1. Getting data
 For this part you need create "1. Getting data/constants.py" file with you API keys, example:
